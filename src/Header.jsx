@@ -7,7 +7,7 @@ export default class Header extends React.Component {
             <header>
                 <h1 id='title'>WeatherCheck</h1>
                 <Form handleSubmit={this.props.handleSubmit} />
-                <p id='error' className={this.props.error ? null : 'hidden'}>
+                <p id='error' className={`${this.props.error ? null : 'hidden'} ${this.props.shake ? 'shake' : null}`}>
                     Could not find city
                 </p>
             </header>

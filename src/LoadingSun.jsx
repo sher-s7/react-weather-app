@@ -5,6 +5,7 @@ import React from 'react';
 
 export default class LoadingSun extends React.Component {
     render() {
+        
         return (
             <div id="smiling-sun">
                 <img
