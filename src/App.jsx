@@ -17,14 +17,19 @@ export default class App extends React.Component {
             error: false,
             shake: false,
             fadeOut: false,
+            tempUnit: 'metric'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    toggleTempUnit() {
+        this.setState({tempUnit: this.state.tempUnit==='metric' ? 'imperial' : 'metric'})
+    }
+
     async handleSubmit(e, value) {
         e.preventDefault();
-        this.setState({shake: false});
+        this.setState({ shake: false });
         fetch(
             "https://sher-s7.github.io/weather-app/citylist.json",
             { mode: "cors" }
@@ -32,7 +37,7 @@ export default class App extends React.Component {
             .then(cities => cities.json())
             .then(citiesJSON => citiesJSON.filter((city) => city.name.toUpperCase() === value.toUpperCase()).map(city => city.id))
             .then(cityIDs => fetch(
-                `http://api.openweathermap.org/data/2.5/group?id=${cityIDs.join(',')}&appid=bec001b5ecc8bf70e103c96354725b62`,
+                `http://api.openweathermap.org/data/2.5/group?id=${cityIDs.join(',')}&appid=bec001b5ecc8bf70e103c96354725b62&units=${this.state.tempUnit}`,
                 { mode: "cors" }
             ))
             .then(data => {
@@ -49,19 +54,19 @@ export default class App extends React.Component {
             })
             .catch((error) => {
                 console.error(error, 'Could not find city')
-                this.setState({ error: true, shake: true});
+                this.setState({ error: true, shake: true });
             })
-
-
     }
 
 
     render() {
-
         return (
             <div id='container'>
                 <Header shake={this.state.shake} error={this.state.error} handleSubmit={this.handleSubmit} />
-                <ResultsSection fadeOut={this.state.fadeOut} results={this.state.results}
+                <ResultsSection
+                    toggleTempUnit={this.toggleTempUnit}
+                    unit={this.state.tempUnit}
+                    fadeOut={this.state.fadeOut} results={this.state.results}
                     content={Object.keys(this.state.results).length === 0 ?
                         <EmptyResults fadeOut={this.state.fadeOut} /> :
                         <LoadedResults results={this.state.results} />} />
