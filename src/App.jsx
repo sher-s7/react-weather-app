@@ -17,14 +17,18 @@ export default class App extends React.Component {
             error: false,
             shake: false,
             fadeOut: false,
-            tempUnit: 'metric'
+            tempUnit: 'C'
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    toggleTempUnit() {
-        this.setState({tempUnit: this.state.tempUnit==='metric' ? 'imperial' : 'metric'})
+    toggleTempUnit = () => {
+        if(this.state.tempUnit === 'C') {
+            this.setState({tempUnit: 'F'})
+        }else {
+            this.setState({tempUnit: 'C'})
+        }
     }
 
     async handleSubmit(e, value) {
@@ -37,7 +41,7 @@ export default class App extends React.Component {
             .then(cities => cities.json())
             .then(citiesJSON => citiesJSON.filter((city) => city.name.toUpperCase() === value.toUpperCase()).map(city => city.id))
             .then(cityIDs => fetch(
-                `http://api.openweathermap.org/data/2.5/group?id=${cityIDs.join(',')}&appid=bec001b5ecc8bf70e103c96354725b62&units=${this.state.tempUnit}`,
+                `http://api.openweathermap.org/data/2.5/group?id=${cityIDs.join(',')}&appid=bec001b5ecc8bf70e103c96354725b62`,
                 { mode: "cors" }
             ))
             .then(data => {
@@ -65,11 +69,10 @@ export default class App extends React.Component {
                 <Header shake={this.state.shake} error={this.state.error} handleSubmit={this.handleSubmit} />
                 <ResultsSection
                     toggleTempUnit={this.toggleTempUnit}
-                    unit={this.state.tempUnit}
                     fadeOut={this.state.fadeOut} results={this.state.results}
                     content={Object.keys(this.state.results).length === 0 ?
                         <EmptyResults fadeOut={this.state.fadeOut} /> :
-                        <LoadedResults results={this.state.results} />} />
+                        <LoadedResults unit={this.state.tempUnit} results={this.state.results} />} />
                 <Footer />
             </div>
         )

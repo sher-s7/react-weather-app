@@ -5,13 +5,14 @@ let pluralize = require('pluralize');
 
 export default class LoadedResults extends React.Component {
 
+
     pluralize(string) {
         return
     }
 
     render() {
 
-        console.log(this.props.results)
+        // console.log(this.props.unit)
         const cityList = this.props.results.list;
         return (
             <div id="loaded-results">
@@ -20,7 +21,7 @@ export default class LoadedResults extends React.Component {
                 </h3>
                 <ul id='city-list'>
                     {cityList.map((city) =>
-                        <ResultCard key={city.id.toString()} city={city}/>
+                        <ResultCard key={city.id.toString()} city={city} unit={this.props.unit}/>
                     )}
                 </ul>
             </div>

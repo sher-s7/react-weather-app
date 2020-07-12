@@ -9,7 +9,6 @@
   --dark-orange: #e65100;
   --error: #e61b00;
 
-  color: white;
   font-family: "Open Sans", sans-serif;
 }
 
@@ -53,6 +52,7 @@ header {
   text-align: center;
   margin-top: 0;
   margin-bottom: 55px;
+  color: white;
 }
 
 form {
@@ -231,7 +231,7 @@ input:checked + .slider:before {
   display: flex;
   position: absolute;
   justify-content: space-around;
-  width: 95%;
+  width: 90%;
   top: 50%;
   transform: translateY(-50%);
   height: 100%;
@@ -242,6 +242,7 @@ input:checked + .slider:before {
   color: var(--orange);
   font-family: 'Roboto';
   transition: 0.5s;
+  user-select: none;
 }
 .tempUnits span:nth-child(2) {
   color: white;
