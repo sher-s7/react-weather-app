@@ -17,7 +17,7 @@ export default class LoadedResults extends React.Component {
         return (
             <div id="loaded-results">
                 <h3 id='num-results'>
-                    Found {this.props.results.cnt} {pluralize('city', this.props.results.cnt)} named {cityList[0].name}
+                    Found {this.props.results.cnt} {pluralize('city', this.props.results.cnt)} named <span id='city-name'>{cityList[0].name}</span>
                 </h3>
                 <ul id='city-list'>
                     {cityList.map((city) =>

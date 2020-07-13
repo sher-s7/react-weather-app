@@ -66,9 +66,11 @@ export default class App extends React.Component {
     render() {
         return (
             <div id='container'>
-                <Header shake={this.state.shake} error={this.state.error} handleSubmit={this.handleSubmit} />
+                <Header toggleTempUnit={this.toggleTempUnit}
+                        shake={this.state.shake} 
+                        error={this.state.error} 
+                        handleSubmit={this.handleSubmit} />
                 <ResultsSection
-                    toggleTempUnit={this.toggleTempUnit}
                     fadeOut={this.state.fadeOut} results={this.state.results}
                     content={Object.keys(this.state.results).length === 0 ?
                         <EmptyResults fadeOut={this.state.fadeOut} /> :
