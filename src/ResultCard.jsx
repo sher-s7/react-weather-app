@@ -1,4 +1,5 @@
 import React from 'react';
+import { format } from 'date-fns'
 
 export default class ResultCard extends React.Component {
 
@@ -14,27 +15,32 @@ export default class ResultCard extends React.Component {
         let celsius = temp - 273.15;
         let fahrenheit = (celsius * 9 / 5) + 32;
         return Math.round((unit === 'C' ? celsius : fahrenheit + Number.EPSILON) * 100) / 100;
-         
+
     }
 
-    unixTimeConverter(unixTime) {
-        const dateObj = new Date(unixTime * 1000);
-        const utcString = dateObj.toUTCString();
-        const time = utcString.slice(-11, -4);
-        return time;
+    unixTimeConverter(unixTime, offset) {
+        const d = new Date((unixTime+offset)*1000);
+        const UTCDate = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds() )
+        console.log(UTCDate)
+        return format(UTCDate, 'h:mma');
     }
 
     render() {
-        console.log(this.props.unit)
+
         const city = this.props.city;
+        console.log(city)
         return (
             <li>
                 <div className='cityContainer'>
                     <div className='cityMainInfo'>
-                        <span className={`flag-icon flag-icon-${city.sys.country.toLowerCase()}`}></span>{city.name}
-                        <span className='main-temp'>{this.kelvinToUnit(this.props.unit, city.main.temp) + `°${this.props.unit}`}</span>
-                        <span className='feelslike-temp'>Feels like {this.kelvinToUnit(this.props.unit, city.main.feels_like)
-                            + `°${this.props.unit}`}</span>
+                        <div className={`flag-icon flag-icon-${city.sys.country.toLowerCase()}`}></div>{city.name}
+                        <div className='main-temp'>{this.kelvinToUnit(this.props.unit, city.main.temp) + `°${this.props.unit}`}</div>
+                        <div className='condition'>{city.weather[0].description[0].toUpperCase() + city.weather[0].description.substring(1)}</div>
+                        <div className='wind-speed'>Wind {city.wind.speed * 3.6}<span className='unit'>km/h</span></div>
+                        <div className='visibility'>Visibility {city.visibility / 1000}<span className='unit'>km</span></div>
+                        <div className='humidity'>{city.main.humidity}%</div>
+                        <div className='sunrise'>Sunrise {this.unixTimeConverter(city.sys.sunrise, city.sys.timezone)}</div>
+                        <div className='sunset'>Sunset {this.unixTimeConverter(city.sys.sunset, city.sys.timezone)}</div>
                     </div>
                 </div>
             </li>

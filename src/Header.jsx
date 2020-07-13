@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from './Form';
-import TempUnitToggle from './TempUnitToggle'
+import TempUnitToggle from './TempUnitToggle';
 
 export default class Header extends React.Component {
     render() {

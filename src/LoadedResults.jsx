@@ -12,7 +12,7 @@ export default class LoadedResults extends React.Component {
 
     render() {
 
-        // console.log(this.props.unit)
+        // 
         const cityList = this.props.results.list;
         return (
             <div id="loaded-results">

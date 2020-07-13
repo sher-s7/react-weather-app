@@ -272,6 +272,7 @@ input:checked + .slider span:first-child {
 #loaded-results {
   overflow-y: scroll;
   padding: 0 10px 10px 10px;
+  width: 100%;
 }
 
 #loaded-results::before {

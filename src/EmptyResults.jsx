@@ -1,5 +1,5 @@
 import React from 'react';
-import LoadingSun from './LoadingSun'
+import LoadingSun from './LoadingSun';
 
 export default class EmptyResults extends React.Component {
     render() {
