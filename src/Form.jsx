@@ -18,7 +18,7 @@ export default class Form extends React.Component {
 
     render() {
         return (
-            <form onSubmit={(e) => this.props.handleSubmit(e, this.state.value)}>
+            <form onSubmit={(e) => this.props.handleSubmit(e, this.state.value.trim())}>
                 <div id="input-container">
                     <div id="location-container">
                         <img

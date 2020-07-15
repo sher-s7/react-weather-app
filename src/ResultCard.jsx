@@ -38,13 +38,13 @@ export default class ResultCard extends React.Component {
         console.log(city)
         return (
             <li>
-                <div className={`cityContainer ${this.state.hidden ? 'hidden' : ''}`}>
+                <div className={`cityContainer ${this.state.hidden ? 'hidden' : ''} ${this.props.emptyOut ? 'fadeOut' : ''}`}>
                     
                         <div className={`flag-icon flag-icon-${city.sys.country.toLowerCase()}`}></div>
                         <div className='cityName'>{city.name}</div>
                         <div className='mainTemp'>{this.kelvinToUnit(this.props.unit, city.main.temp) + `°${this.props.unit}`}</div>
                         <div className='condition'>{city.weather[0].description[0].toUpperCase() + city.weather[0].description.substring(1)}</div>
-                        <div className='windSpeed'>Wind {city.wind.speed * 3.6}<span className='unit'>km/h</span></div>
+                        <div className='windSpeed'>Wind {Math.round((city.wind.speed * 3.6 + Number.EPSILON) * 100) / 100}<span className='unit'>km/h</span></div>
                         <div className='visibility'>Visibility {city.visibility / 1000}<span className='unit'>km</span></div>
                         <div className='humidity'>Humidity {city.main.humidity}%</div>
                         <div className='sunrise'>Sunrise {this.unixTimeConverter(city.sys.sunrise, city.sys.timezone)}</div>

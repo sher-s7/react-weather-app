@@ -19,6 +19,7 @@ export default class App extends React.Component {
             fadeOut: false,
             tempUnit: 'C',
             emptyResults: false,
+            lastSearch: '',
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,6 +35,7 @@ export default class App extends React.Component {
 
     async handleSubmit(e, value) {
         e.preventDefault();
+        if (this.state.lastSearch.toUpperCase() === value.toUpperCase()) return;
         this.setState({ shake: false });
         fetch(
             "https://sher-s7.github.io/weather-app/citylist.json",
@@ -47,7 +49,7 @@ export default class App extends React.Component {
             ))
             .then(data => {
                 if (data.status === 200) {
-                    this.setState({emptyResults: true})
+                    this.setState({emptyResults: true, lastSearch: value})
                     return data.json()
                 }
                 throw new Error(data.status)
