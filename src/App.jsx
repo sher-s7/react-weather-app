@@ -17,7 +17,8 @@ export default class App extends React.Component {
             error: false,
             shake: false,
             fadeOut: false,
-            tempUnit: 'C'
+            tempUnit: 'C',
+            emptyResults: false,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,6 +47,7 @@ export default class App extends React.Component {
             ))
             .then(data => {
                 if (data.status === 200) {
+                    this.setState({emptyResults: true})
                     return data.json()
                 }
                 throw new Error(data.status)
@@ -53,7 +55,7 @@ export default class App extends React.Component {
             .then(dataJSON => {
                 this.setState({ fadeOut: true })
                 setTimeout(() => {
-                    this.setState({ results: dataJSON, error: false, content: <LoadedResults /> })
+                    this.setState({ results: dataJSON, error: false, content: <LoadedResults/>, emptyResults: false })
                 }, 500);
             })
             .catch((error) => {
@@ -71,10 +73,10 @@ export default class App extends React.Component {
                         error={this.state.error} 
                         handleSubmit={this.handleSubmit} />
                 <ResultsSection
-                    fadeOut={this.state.fadeOut} results={this.state.results}
+                    results={this.state.results}
                     content={Object.keys(this.state.results).length === 0 ?
                         <EmptyResults fadeOut={this.state.fadeOut} /> :
-                        <LoadedResults unit={this.state.tempUnit} results={this.state.results} />} />
+                        <LoadedResults emptyResults={this.state.emptyResults} unit={this.state.tempUnit} results={this.state.results} />} />
                 <Footer />
             </div>
         )

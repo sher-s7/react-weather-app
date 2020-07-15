@@ -32,8 +32,8 @@ body {
 }
 
 .hidden {
-  visibility: hidden;
-  opacity: 0;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
 /* Header */
@@ -257,6 +257,8 @@ input:checked + .slider span:first-child {
   height: calc(100% - 270px);
 }
 
+
+
 #num-results {
   text-align: center;
   font-family: 'Roboto', sans-serif;
@@ -273,21 +275,6 @@ input:checked + .slider span:first-child {
   overflow-y: scroll;
   padding: 0 10px 10px 10px;
   width: 100%;
-}
-
-#loaded-results::before {
-  content:'';
-  width:100%;
-  height:100%;    
-  position:absolute;
-  left:0;
-  top:0;
-  background:linear-gradient(transparent 200px, var(--body));
-  pointer-events: none;
-}
-
-#city-list {
-  padding-bottom: 100px;
 }
 
 #empty {
@@ -331,14 +318,97 @@ input:checked + .slider span:first-child {
 .fadeOut {
   transition: 0.5s ease;
   opacity: 0;
-  transform: scale(0.9);
+  transform: scale(0.95);
 }
 
+.fadeIn {
+  animation: fadeIn;
+  animation-duration: 0.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 @keyframes spin {
   100% {
     transform: rotate(359deg);
   }
+}
+
+#city-list {
+  padding: 0;
+  margin: 0;
+  padding-bottom: 10px;
+  list-style: none;
+}
+
+#city-list.hidden {
+  transform: scale(0.9) !important;
+}
+
+#city-list.fadeOut {
+  transform: scale(0.95) !important;
+}
+
+#city-list .cityContainer {
+  transition: 0.5s;
+  transform: scale(1);
+  visibility: visible;
+  opacity: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.flag-icon {
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+
+.cityName {
+  grid-column-start: 2;
+  grid-row-start: 1;
+}
+
+.mainTemp {
+  grid-column-start: 3;
+  grid-row-start: 1;
+}
+
+.condition {
+  grid-column-start: 1;
+  grid-row-start: 2;
+}
+
+.windSpeed {
+  grid-column-start: 2;
+  grid-row-start: 2;
+}
+
+.visibility {
+  grid-column-start: 3;
+  grid-row-start: 2;
+}
+
+.humidity {
+  grid-column-start: 4;
+  grid-row-start: 2;
+}
+
+.sunrise {
+  grid-column-start: 1;
+  grid-row-start: 3;
+}
+
+.sunset {
+  grid-column-start: 3;
+  grid-row-start: 3;
 }
 
 /* Footer */
@@ -351,6 +421,7 @@ footer {
   padding: 3px;
   background-color: var(--body);
   width: 100%;
+  box-shadow: 0 -10px 15px var(--body);
 }
 
 #powered-by {
