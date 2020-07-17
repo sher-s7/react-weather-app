@@ -57,7 +57,6 @@ export default class ResultCard extends React.Component {
 
     render() {
         const city = this.props.city;
-        console.log()
         const sunrise = this.unixTimeConverter(city.sys.sunrise, city.sys.timezone);
         const sunset = this.unixTimeConverter(city.sys.sunset, city.sys.timezone);
         return (
@@ -65,7 +64,6 @@ export default class ResultCard extends React.Component {
                 <div className={`cityContainer ${this.state.hidden ? 'hidden' : ''} ${this.props.emptyOut ? 'fadeOut' : ''}`}>
 
                     <div className={`flag-icon flag-icon-${city.sys.country.toLowerCase()}`}></div>
-                    <div className='cityName'>{city.name}</div>
                     <div className='mainTemp'><span className='unit'>{this.kelvinToUnit(this.props.unit, city.main.temp)}<sup>{`°${this.props.unit}`}</sup></span></div>
                     <div className='condition'>{city.weather[0].description[0].toUpperCase() + city.weather[0].description.substring(1)}</div>
                     <div className='weather-icon'><img src={weatherIcons[city.weather[0].icon.substring(0, 2)]} alt="" /></div>
@@ -78,6 +76,8 @@ export default class ResultCard extends React.Component {
                     <div className='sunset'>Sunset <span className='unit'>{sunset.substring(0, sunset.indexOf('M') - 1)}<sup className='am-pm'>{sunset.substring(sunset.indexOf('M') - 1)}</sup></span></div>
 
                 </div>
+                <div className={`coords ${this.state.hidden ? 'hidden' : ''} ${this.props.emptyOut ? 'fadeOut' : ''}`}><a target='_blank' href={`https://www.google.com/maps/place/${city.coord.lat}%2C${city.coord.lon}`} rel="noopener noreferrer">View on map</a></div>
+
             </li>
         );
     }
