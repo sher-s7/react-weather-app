@@ -144,6 +144,8 @@ form {
 }
 
 ::placeholder {
+  color: white;
+  opacity: 0.5;
   text-transform: none;
 }
 
