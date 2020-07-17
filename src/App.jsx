@@ -44,7 +44,7 @@ export default class App extends React.Component {
             .then(cities => cities.json())
             .then(citiesJSON => citiesJSON.filter((city) => city.name.toUpperCase() === value.toUpperCase()).map(city => city.id))
             .then(cityIDs => fetch(
-                `http://api.openweathermap.org/data/2.5/group?id=${cityIDs.join(',')}&appid=bec001b5ecc8bf70e103c96354725b62`,
+                `https://api.openweathermap.org/data/2.5/group?id=${cityIDs.join(',')}&appid=bec001b5ecc8bf70e103c96354725b62`,
                 { mode: "cors" }
             ))
             .then(data => {
