@@ -5,6 +5,7 @@ import ResultsSection from './ResultsSection';
 import Footer from './Footer';
 import EmptyResults from './EmptyResults';
 import LoadedResults from './LoadedResults';
+import LoadingSun from './LoadingSun';
 
 
 export default class App extends React.Component {
@@ -20,22 +21,24 @@ export default class App extends React.Component {
             tempUnit: 'C',
             emptyResults: false,
             lastSearch: '',
+            hideSun: true,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     toggleTempUnit = () => {
-        if(this.state.tempUnit === 'C') {
-            this.setState({tempUnit: 'F'})
-        }else {
-            this.setState({tempUnit: 'C'})
+        if (this.state.tempUnit === 'C') {
+            this.setState({ tempUnit: 'F' })
+        } else {
+            this.setState({ tempUnit: 'C' })
         }
     }
 
     async handleSubmit(e, value) {
         e.preventDefault();
         if (this.state.lastSearch.toUpperCase() === value.toUpperCase()) return;
+        if(Object.keys(this.state.results).length !== 0) this.setState({hideSun: false});
         this.setState({ shake: false });
         fetch(
             "https://sher-s7.github.io/weather-app/citylist.json",
@@ -49,7 +52,7 @@ export default class App extends React.Component {
             ))
             .then(data => {
                 if (data.status === 200) {
-                    this.setState({emptyResults: true, lastSearch: value})
+                    this.setState({ emptyResults: true, lastSearch: value })
                     return data.json()
                 }
                 throw new Error(data.status)
@@ -57,23 +60,59 @@ export default class App extends React.Component {
             .then(dataJSON => {
                 this.setState({ fadeOut: true })
                 setTimeout(() => {
-                    this.setState({ results: dataJSON, error: false, content: <LoadedResults/>, emptyResults: false })
+                    this.setState({ results: dataJSON, error: false, emptyResults: false, hideSun: true })
                 }, 500);
             })
             .catch((error) => {
                 console.error(error, 'Could not find city')
-                this.setState({ error: true, shake: true });
+                this.setState({ error: true, shake: true, hideSun: true });
             })
+    }
+
+    cityByCoords = (lat, lon) => {
+        console.log(lat, lon)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=bec001b5ecc8bf70e103c96354725b62`,
+            { mode: "cors" }
+        ).then(data => {
+            if (data.status === 200) {
+                this.setState({ emptyResults: true, lastSearch: '' })
+                return (data.json())
+            } else {
+                throw new Error(data.status)
+            }
+        })
+            .then(dataJSON => {
+                this.setState({ fadeOut: true })
+                console.log('results', dataJSON)
+                setTimeout(() => {
+                    this.setState({ results: dataJSON, error: false, emptyResults: false, hideSun: true })
+                }, 500);
+            })
+            .catch((error) => {
+                console.error(error, 'Could not find city')
+                this.setState({ error: true, shake: true, hideSun: true });
+            })
+    }
+
+    showLoader = () => {
+        if(Object.keys(this.state.results).length !== 0) this.setState({hideSun: false})
+    }
+
+    hideLoader = () => {
+        this.setState({hideSun: true})
     }
 
 
     render() {
         return (
             <div id='container'>
-                <Header toggleTempUnit={this.toggleTempUnit}
-                        shake={this.state.shake} 
-                        error={this.state.error} 
-                        handleSubmit={this.handleSubmit} />
+                <LoadingSun fixed={true} hidden={this.state.hideSun}/>
+                <Header hideLoader={this.hideLoader} showLoader={this.showLoader}
+                    cityByCoords={this.cityByCoords}
+                    toggleTempUnit={this.toggleTempUnit}
+                    shake={this.state.shake}
+                    error={this.state.error}
+                    handleSubmit={this.handleSubmit} />
                 <ResultsSection
                     results={this.state.results}
                     content={Object.keys(this.state.results).length === 0 ?

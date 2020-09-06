@@ -57,8 +57,9 @@ export default class ResultCard extends React.Component {
 
     render() {
         const city = this.props.city;
-        const sunrise = this.unixTimeConverter(city.sys.sunrise, city.sys.timezone);
-        const sunset = this.unixTimeConverter(city.sys.sunset, city.sys.timezone);
+        const timezone = city.sys.timezone || city.timezone;
+        const sunrise = this.unixTimeConverter(city.sys.sunrise, timezone);
+        const sunset = this.unixTimeConverter(city.sys.sunset, timezone);
         return (
             <li>
                 <div className={`cityContainer ${this.state.hidden ? 'hidden' : ''} ${this.props.emptyOut ? 'fadeOut' : ''}`}>

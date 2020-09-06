@@ -7,7 +7,7 @@ export default class LoadingSun extends React.Component {
     render() {
         
         return (
-            <div id="smiling-sun">
+            <div id="smiling-sun" className={this.props.fixed ? `fixed ${this.props.hidden ? 'hidden' : ''}` : ''}>
                 <img
                     src={SunRays}
                     alt="smiling-sun-rays"

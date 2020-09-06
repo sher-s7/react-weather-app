@@ -6,6 +6,7 @@ let pluralize = require('pluralize');
 export default class LoadedResults extends React.Component {
 
    componentDidMount() {
+       console.log(this.props.results)
         document.getElementById('loaded-results').scrollTo(0,0)
     }
     
@@ -14,11 +15,14 @@ export default class LoadedResults extends React.Component {
     }
 
     render() {
-        const cityList = this.props.results.list;
+        const cityList = this.props.results.list || [this.props.results];
+        const oneCity = !this.props.results.list;
         return (
             <div id="loaded-results">
                 <h3 id='num-results' className='fadeIn'>
-                    Found {this.props.results.cnt} {pluralize('city', this.props.results.cnt)} named <span id='city-name'>{cityList[0].name}</span>
+                    {oneCity ?
+                    <span id='city-name'>{this.props.results.name}</span> : 
+                        <span>Found {this.props.results.cnt} {pluralize('city', this.props.results.cnt)} named <span id='city-name'>{cityList[0].name}</span></span>}
                 </h3>
                 <ul id='city-list'>
                     {cityList.map((city, index) =>

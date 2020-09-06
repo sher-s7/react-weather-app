@@ -60,9 +60,9 @@ header {
 #github {
   display: none;
 }
- #github img {
-   width: 25px;
- }
+#github img {
+  width: 25px;
+}
 
 #title {
   font-weight: lighter;
@@ -95,6 +95,8 @@ form {
 #location-container {
   margin-right: -10px;
   border-radius: 9px 0 0 9px;
+  border: none;
+  cursor: pointer;
 }
 
 #search-icon-container {
@@ -160,6 +162,21 @@ form {
   transition: 0.2s;
   font-family: "Hind", sans-serif;
   font-size: 16px;
+}
+
+#geoFail {
+  position: absolute;
+  opacity: 1;
+  visibility: visible;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000000b0;
+  padding: 10px;
+  color: var(--body);
+  border-radius: 3px;
+  transition: 0.5s;
+  z-index: 10;
 }
 
 .shake {
@@ -324,6 +341,16 @@ input:checked + .slider span:first-child {
   top: 0;
 }
 
+#smiling-sun.fixed {
+  position: fixed;
+  top: 51%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  width: 40px;
+  height: 40px;
+}
+
 #smiling-sun img {
   position: absolute;
   width: inherit;
@@ -407,14 +434,14 @@ input:checked + .slider span:first-child {
   align-items: flex-start;
   justify-content: center;
   color: #2d2d2d;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
   padding: 5px;
   height: 50px;
 }
 
 .unit {
   font-size: 16px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }
 
 .mainTemp .unit {
@@ -423,7 +450,7 @@ input:checked + .slider span:first-child {
 
 sup {
   font-size: 10px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }
 
 .flag-icon {
@@ -432,7 +459,6 @@ sup {
   position: absolute !important;
   font-size: 20px !important;
   left: 5px;
-
 }
 
 .mainTemp {
@@ -549,5 +575,4 @@ footer {
     padding: 10px;
     width: 97%;
   }
-
 }
