@@ -5,8 +5,6 @@ import ResultsSection from './ResultsSection';
 import Footer from './Footer';
 import EmptyResults from './EmptyResults';
 import LoadedResults from './LoadedResults';
-import LoadingSun from './LoadingSun';
-
 
 export default class App extends React.Component {
 
