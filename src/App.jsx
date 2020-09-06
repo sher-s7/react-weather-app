@@ -21,7 +21,7 @@ export default class App extends React.Component {
             tempUnit: 'C',
             emptyResults: false,
             lastSearch: '',
-            hideSun: true,
+            hideLoader: true,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,7 +38,7 @@ export default class App extends React.Component {
     async handleSubmit(e, value) {
         e.preventDefault();
         if (this.state.lastSearch.toUpperCase() === value.toUpperCase()) return;
-        if(Object.keys(this.state.results).length !== 0) this.setState({hideSun: false});
+        if (Object.keys(this.state.results).length !== 0) this.setState({ hideLoader: false });
         this.setState({ shake: false });
         fetch(
             "https://sher-s7.github.io/weather-app/citylist.json",
@@ -60,12 +60,12 @@ export default class App extends React.Component {
             .then(dataJSON => {
                 this.setState({ fadeOut: true })
                 setTimeout(() => {
-                    this.setState({ results: dataJSON, error: false, emptyResults: false, hideSun: true })
+                    this.setState({ results: dataJSON, error: false, emptyResults: false, hideLoader: true })
                 }, 500);
             })
             .catch((error) => {
                 console.error(error, 'Could not find city')
-                this.setState({ error: true, shake: true, hideSun: true });
+                this.setState({ error: true, shake: true, hideLoader: true });
             })
     }
 
@@ -85,28 +85,30 @@ export default class App extends React.Component {
                 this.setState({ fadeOut: true })
                 console.log('results', dataJSON)
                 setTimeout(() => {
-                    this.setState({ results: dataJSON, error: false, emptyResults: false, hideSun: true })
+                    this.setState({ results: dataJSON, error: false, emptyResults: false, hideLoader: true })
                 }, 500);
             })
             .catch((error) => {
                 console.error(error, 'Could not find city')
-                this.setState({ error: true, shake: true, hideSun: true });
+                this.setState({ error: true, shake: true, hideLoader: true });
             })
     }
 
     showLoader = () => {
-        if(Object.keys(this.state.results).length !== 0) this.setState({hideSun: false})
+        if (Object.keys(this.state.results).length !== 0) this.setState({ hideLoader: false })
     }
 
     hideLoader = () => {
-        this.setState({hideSun: true})
+        this.setState({ hideLoader: true })
     }
 
 
     render() {
         return (
             <div id='container'>
-                <LoadingSun fixed={true} hidden={this.state.hideSun}/>
+                <div id='loaderContainer' className={this.state.hideLoader ? 'hidden' : ''}>
+                    <div id="loader"></div>
+                </div>
                 <Header hideLoader={this.hideLoader} showLoader={this.showLoader}
                     cityByCoords={this.cityByCoords}
                     toggleTempUnit={this.toggleTempUnit}
