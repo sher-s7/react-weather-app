@@ -43,10 +43,10 @@ export default class ResultCard extends React.Component {
     }
 
     unixTimeConverter(unixTime, offset) {
-        const d = new Date((unixTime + offset) * 1000);
+        const d = new Date((unixTime + (offset || 0)) * 1000);
         const UTCDate = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds())
 
-        return format(UTCDate, `h:mma`);
+        return format(UTCDate, 'h:mma');
     }
 
     componentDidMount() {
@@ -58,6 +58,7 @@ export default class ResultCard extends React.Component {
     render() {
         const city = this.props.city;
         const timezone = city.sys.timezone || city.timezone;
+
         const sunrise = this.unixTimeConverter(city.sys.sunrise, timezone);
         const sunset = this.unixTimeConverter(city.sys.sunset, timezone);
         return (

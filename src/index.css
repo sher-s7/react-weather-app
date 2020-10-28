@@ -17,7 +17,7 @@
 
 ::selection,
 ::-moz-selection {
-  background-color: var(--dark-orange);
+  background-color: var(--orange);
 }
 
 html,

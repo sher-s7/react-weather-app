@@ -6,7 +6,7 @@ let pluralize = require('pluralize');
 export default class LoadedResults extends React.Component {
 
    componentDidMount() {
-       console.log(this.props.results)
+       
         document.getElementById('loaded-results').scrollTo(0,0)
     }
     

@@ -68,7 +68,7 @@ export default class App extends React.Component {
     }
 
     cityByCoords = (lat, lon) => {
-        console.log(lat, lon)
+        
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=bec001b5ecc8bf70e103c96354725b62`,
             { mode: "cors" }
         ).then(data => {
@@ -81,7 +81,7 @@ export default class App extends React.Component {
         })
             .then(dataJSON => {
                 this.setState({ fadeOut: true })
-                console.log('results', dataJSON)
+                
                 setTimeout(() => {
                     this.setState({ results: dataJSON, error: false, emptyResults: false, hideLoader: true })
                 }, 500);
